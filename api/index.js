@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const memoriesRouter = require("../routes/memories");
+const askRouter = require("../routes/ask");
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/memories", memoriesRouter);
+app.use("/ask", askRouter);
 
 module.exports = app;
