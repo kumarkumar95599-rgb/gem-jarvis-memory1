@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
-const memoriesRouter = require("../routes/memories");
-const askRouter = require("../routes/ask");
+const memoriesRouter = require("../routes/memories.js");
+const askRouter = require("../routes/ask.js");
 
 const app = express();
 
