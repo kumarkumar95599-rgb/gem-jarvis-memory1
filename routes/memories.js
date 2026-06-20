@@ -47,3 +47,21 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+router.get("/addtest", async (req, res) => {
+  try {
+    const docRef = await db.collection("memories").add({
+      memory: "My name is Utkarsh",
+      createdAt: new Date()
+    });
+
+    res.json({
+      success: true,
+      id: docRef.id
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
