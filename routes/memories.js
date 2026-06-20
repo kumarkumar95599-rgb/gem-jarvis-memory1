@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+// TEST route
 router.get("/addtest", async (req, res) => {
   try {
     const docRef = await db.collection("memories").add({
@@ -65,3 +65,5 @@ router.get("/addtest", async (req, res) => {
     });
   }
 });
+
+module.exports = router;
