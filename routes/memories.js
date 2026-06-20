@@ -2,16 +2,41 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../lib/firebase");
 
+// GET memories
 router.get("/", async (req, res) => {
   try {
-    await db.collection("test").add({
-      message: "Gem AI Connected",
-      time: new Date()
+    const snapshot = await db.collection("memories").get();
+
+    const memories = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    res.json({
+      success: true,
+      memories
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// POST memory
+router.post("/", async (req, res) => {
+  try {
+    const { memory } = req.body;
+
+    const docRef = await db.collection("memories").add({
+      memory,
+      createdAt: new Date()
     });
 
     res.json({
       success: true,
-      message: "Firestore connected successfully"
+      id: docRef.id
     });
   } catch (error) {
     res.status(500).json({
