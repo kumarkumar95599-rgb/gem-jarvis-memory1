@@ -1,23 +1,33 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
 
-// GET test route
-router.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Ask route working"
-  });
-});
-
-// POST ask route
 router.post("/", async (req, res) => {
   try {
-    const { question } = req.body;
+    const { question, model } = req.body;
+
+    const response = await axios.post(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: model || "google/gemini-2.5-flash",
+        messages: [
+          {
+            role: "user",
+            content: question
+          }
+        ]
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
     res.json({
       success: true,
-      question,
-      answer: "Gem AI response will come here"
+      answer: response.data.choices[0].message.content
     });
 
   } catch (error) {
