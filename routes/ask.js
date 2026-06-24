@@ -4,12 +4,12 @@ const axios = require("axios");
 
 router.post("/", async (req, res) => {
   try {
-    const { question, model } = req.body;
+    const { question } = req.body;
 
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: model || "google/gemini-2.5-flash",
+        model: "google/gemini-2.5-flash",
         messages: [
           {
             role: "user",
@@ -39,3 +39,4 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+
